@@ -1,0 +1,312 @@
+<!doctype html>
+<html>
+	<head>
+		<link rel="stylesheet" href=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/css/reveal.min.css>
+		<link rel="stylesheet" href=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/css/theme/white.css>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/js/reveal.min.js></script>
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js></script>
+		<script src=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/plugin/highlight/highlight.js></script>
+		<script src=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/plugin/notes/notes.js></script>
+
+	</head>
+
+  <!--
+begin.com
+
+
+
+
+  -->
+
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+        <section>
+          <p>
+          building <a href=https://begin.com>begin.com</a> with cloud functions
+          </p>
+        </section>
+
+        <section>
+          <p><a href=https://twitter.com/brianleroux>@brianleroux</a></p>
+          <small>
+            Cofounder/CTO <a href=https://twitter.com/begin>@begin</a>
+          </small>
+        </section>
+
+				<section>
+          2015-ish: attention migrated from mobile apps to a few messaging apps
+        </section>
+
+				<section>
+         &#x1f34c; Suddenly everyone goes bananas for bots &#x1f916;
+        </section>
+
+				<section>
+          <p>Slack
+          <p class=fragment>Facebook
+          <p class=fragment>Kik
+          <p class=fragment>Telegram
+          <p class=fragment>Microsoft Bot Framework
+          <p class=fragment>Amazon and Google
+        </section>
+
+        <section>As more people move to places like Slack we felt there could be a gap opening in productivity tools</section>
+
+				<section>
+          <small>
+          <p>Immediate feedback loops with colleagues and customers
+          <p class=fragment>Better ability to share and react to knowledge in real time
+          <p class=fragment>No need for long web forms for simple tasks: just use plain language
+          </small>
+        </section>
+
+        <section>&#x1f511; speed</section>
+
+				<section>
+          <p>Started building <a href=https://begin.com>begin.com</a> with a few requirements
+          <ol>
+          <li class=fragment>be fast as fuck
+          <li class=fragment>understands natural language
+          <li class=fragment>have as little user interface as possible
+          </ol>
+        </section>
+
+
+				<section>
+          <blockquote>The chief cause of problems is solutions. - Eric Sevareid</blockquote>
+        </section>
+
+				<section>
+          <p>Physical servers
+          <p class=fragment>Virtual machines
+          <p class=fragment>Containers
+          <p class=fragment><strong>Cloud functions</strong>
+        </section>
+
+        <section><strong>Cloud functions</strong> are different: virtual machines and containers are a metaphor for a physical server</section>
+
+        <section>
+          <p>We knew Cloud Functions would bring significant advantages in an incumbant productivity market. 
+        </section>
+
+        <section>
+          <small>
+            <ul>
+          <li>Deploy in seconds with zero downtime
+          <li>Scales transparently
+          <li>Sub second latency is default
+            </ul>
+          </small>
+        </section>
+
+        <section>  &#x1f197; &#x1f192; we have convinced ourselves to build a bot with cloud functions</section>
+
+        <section>
+           <small>
+          Other things we needed to solve
+            <ul>
+          <li>natural langauge understanding
+          <li>millisecond precision datetime
+          <li>slack client!
+            </ul>
+          </small>
+        </section>
+
+
+
+
+
+        <section>Cloud based natural language services are too slow</section>
+        <section><a href=https://github.com/nlp-compromise/compromise>nlp compromise</a></section>
+        <section>
+          <pre><code>let nlp = require('nlp_compromise')
+let doc = nlp('she sells seashells by the seashore.')
+
+doc.sentences().toFutureTense().out('text')
+// 'she will sell seashells...'
+
+doc.verbs().conjugate()
+// [{ PastTense: 'sold',
+//    Infinitive: 'sell',
+//    Gerund: 'selling', ...
+// }]</code></pre>
+        </section>
+        <section>
+          <small>
+          <ul>
+          <li>Runs completely clientside or serverside
+          <li>Tiny 200kb and thusly fast
+          </ul>
+          </small>
+        </section>
+
+
+        <section>Most datetime solutions for JS are too darn big</section>
+        <section><a href=https://github.com/smallwins/spacetime>spacetime</a></section>
+        <section>
+          <pre><code>var spacetime = require('spacetime')
+
+var s = spacetime.now()
+s.timezone().name // logs current tz
+s.goto('Australia/Brisbane') 
+
+var d = spacetime([2017, 5, 2])
+s.isAfter(d) // True</code></pre>
+        </section>
+        <section>
+          <small>
+          <ul>
+          <li>Runs completely clientside or serverside
+          <li>Tiny 35kb and thusly fast
+          </ul>
+          </small>
+        </section>
+
+
+        <section><p>At the time, there wasn't a Slack client for Node &amp; Browser</p>
+          <small>There's <em>many</em> options now!</small>
+        </section>
+        <section><a href=https://github.com/smallwins/slack>slack</a></section>
+        <section>
+          <pre><code>var slack = require('slack')
+
+slack.api.test({hello: 'world'}, console.log)
+
+// logs {args:{hello:'world'}}
+          </code></pre>
+        </section>
+        <section>
+          <small>
+          <ul>
+          <li>Runs completely clientside or serverside
+          <li>IDK how big/small but its def fast!
+          </ul>
+          </small>
+        </section>
+
+        <section>Cloud function tooling was non existent</section>
+        <section>
+					<small>
+					<ol>
+            <li>Declaratively define architecture with a high level primitives in plain text in <code>.arc</code>
+						<li class=fragment>Workflows to generate local code, configure, provision and deploy infrastructure
+						<li class=fragment>Cloud function code itself
+					</ol>
+					</small>
+				</section>
+        <section><a href=https://arc.codes>arc.codes</a></section>
+        <section><small><code>.arc</code> for begin</small><pre><code>@app
+slack-api
+
+@html
+get /auth      # tmp path for logging in and managing slack auths
+get /install   # slack callback page installing the bot
+get /password  # home page for creating an account thru slack
+post /password # register an account
+post /auth     # performs login
+post /action   # slack button actions route here (somteimes pass onto @events action)
+post /slash    # slash command endpoint
+
+@json
+post /event    # slack events api payloads route here
+
+@events
+action           # optimistic write handler for button actions
+channel-joined   # fired when the bot is invited to a channel
+pending-save     # fired whenver a pending is writ
+reaction-added   # fired when a reactji happens
+send-dm          # sends a direct message
+task-changed     # fired when a task is untrashed
+thread-reply     # optimistic thread reply
+welcome-auth     # fired upon a successful oauth (accounts-identities row added)
+welcome-install  # fired upon a successful install (slackbots row added)
+
+@scheduled
+daily-update rate(30 minutes)     # scheduled lambda every half hour; sends 9:00am msg for an account tz
+weekly-update cron(0 15 ? * FRI *) # friday at 3pm
+</code></pre>
+</section>
+<section>
+<pre>
+/
+|-src
+| |-html
+| | |-get-auth
+| | |-get-install
+| | |-get-password
+| | |-post-password
+| | |-post-auth
+| | |-post-action
+| | '-post-slash
+| |-json
+| |-events
+| '-scheduled
+|-.arc
+'-package.json
+</pre>
+</section>
+<section><a href=https://arc.codes>arc.codes</a></section>
+
+
+<section>Things we learned the hard way</section>
+<section>Setup a completely isolated staging bot right away</section>
+<section>Everything should be an optmistic update</section>
+<section>Keep your lambdas small</section>
+<section>Keep your lambdas warm</section>
+<section>UI is ok! Buttons are great</section>
+<section>Command based interaction is ok!</section>
+<section>Perf budgets are crucial for focus</section>
+
+
+<section><h1>
+It is incredibly harder to build something fast adn simple than it is to build something large and slow
+</h1></section>
+
+
+
+
+
+
+
+        <section>
+            Before <code>.arc</code><br>
+          <small>
+					<ol>
+            <li>Super long dev/depoy cycles
+						<li>Inconsistent infra leading to hard to trace bugs
+						<li>Frustration, demotivation, unhappiness and a sense of doom
+					</ol>
+					</small>
+        </section>
+
+        <section>
+            After <code>.arc</code><br>
+          <small>
+					<ol>
+            <li>Dev cycles are immediate, deployments run in secondss
+						<li>Infra is consistent, bugs are easy to trace (and isolated!)
+						<li>Green builds and happy devs
+					</ol>
+					</small>
+        </section>
+
+        <section><a href=https://arc.codes>arc.codes</a></section>
+
+<!--
+
+-->
+			</div>
+		</div>
+		<script>
+    Reveal.initialize({
+    	showNotes: false
+    })
+
+		hljs.initHighlightingOnLoad()
+
+		</script>
+	</body>
+</html>
