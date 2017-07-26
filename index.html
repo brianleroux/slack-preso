@@ -53,7 +53,7 @@ begin.com
           <p class=fragment>Amazon and Google
         </section>
 
-        <section>As more people move to places like Slack we felt there could be a gap opening in productivity tools</section>
+        <section>As more teams move to tools like Slack we felt there could be a new opportunity in productivity tools</section>
 
 				<section>
           <small>
@@ -76,7 +76,7 @@ begin.com
 
 
 				<section>
-          <blockquote>The chief cause of problems is solutions. - Eric Sevareid</blockquote>
+          <blockquote>The chief cause of problems is solutions.<br />-Eric Sevareid</blockquote>
         </section>
 
 				<section>
@@ -89,7 +89,7 @@ begin.com
         <section><strong>Cloud functions</strong> are different: virtual machines and containers are a metaphor for a physical server</section>
 
         <section>
-          <p>We knew Cloud Functions would bring significant advantages in an incumbant productivity market. 
+          <p>We knew Cloud Functions would bring significant advantages in an incumbent productivity market. 
         </section>
 
         <section>
@@ -97,7 +97,7 @@ begin.com
             <ul>
           <li>Deploy in seconds with zero downtime
           <li>Scales transparently
-          <li>Sub second latency is default
+          <li>Sub-second latency is default
             </ul>
           </small>
         </section>
@@ -108,9 +108,9 @@ begin.com
            <small>
           Other things we needed to solve
             <ul>
-          <li>natural langauge understanding
+          <li>natural language understanding
           <li>millisecond precision datetime
-          <li>slack client!
+          <li>Slack client!
             </ul>
           </small>
         </section>
@@ -119,7 +119,7 @@ begin.com
 
 
 
-        <section>Cloud based natural language services are too slow</section>
+        <section>Cloud-based natural language services are too slow</section>
         <section><a href=https://github.com/nlp-compromise/compromise>nlp compromise</a></section>
         <section>
           <pre><code>let nlp = require('nlp_compromise')
@@ -138,7 +138,7 @@ doc.verbs().conjugate()
           <small>
           <ul>
           <li>Runs completely clientside or serverside
-          <li>Tiny 200kb and thusly fast
+          <li>Tiny 200KB and thusly fast
           </ul>
           </small>
         </section>
@@ -160,14 +160,14 @@ s.isAfter(d) // True</code></pre>
           <small>
           <ul>
           <li>Runs completely clientside or serverside
-          <li>Tiny 35kb and thusly fast
+          <li>Tiny 35KB and thusly fast
           </ul>
           </small>
         </section>
 
 
         <section><p>At the time, there wasn't a Slack client for Node &amp; Browser</p>
-          <small>There's <em>many</em> options now!</small>
+          <small>There are <em>many</em> options now!</small>
         </section>
         <section><a href=https://github.com/smallwins/slack>slack</a></section>
         <section>
@@ -175,19 +175,19 @@ s.isAfter(d) // True</code></pre>
 
 slack.api.test({hello: 'world'}, console.log)
 
-// logs {args:{hello:'world'}}
-          </code></pre>
+// logs {args:{hello:'world'}}</code></pre>
         </section>
         <section>
           <small>
           <ul>
           <li>Runs completely clientside or serverside
-          <li>IDK how big/small but its def fast!
+          <li>IDK how big/small but it's definitely fast!
           </ul>
           </small>
         </section>
 
         <section>Cloud function tooling was non existent</section>
+        <section><a href=https://arc.codes>arc.codes</a></section>
         <section>
 					<small>
 					<ol>
@@ -197,7 +197,6 @@ slack.api.test({hello: 'world'}, console.log)
 					</ol>
 					</small>
 				</section>
-        <section><a href=https://arc.codes>arc.codes</a></section>
         <section><small><code>.arc</code> for begin</small><pre><code>@app
 slack-api
 
@@ -207,7 +206,7 @@ get /install   # slack callback page installing the bot
 get /password  # home page for creating an account thru slack
 post /password # register an account
 post /auth     # performs login
-post /action   # slack button actions route here (somteimes pass onto @events action)
+post /action   # slack button actions route here (sometimes pass onto @events action)
 post /slash    # slash command endpoint
 
 @json
@@ -216,7 +215,7 @@ post /event    # slack events api payloads route here
 @events
 action           # optimistic write handler for button actions
 channel-joined   # fired when the bot is invited to a channel
-pending-save     # fired whenver a pending is writ
+pending-save     # fired whenever a pending is writ
 reaction-added   # fired when a reactji happens
 send-dm          # sends a direct message
 task-changed     # fired when a task is untrashed
@@ -248,7 +247,6 @@ weekly-update cron(0 15 ? * FRI *) # friday at 3pm
 '-package.json
 </pre>
 </section>
-<section><a href=https://arc.codes>arc.codes</a></section>
         <section>
             Before <code>.arc</code><br>
           <small>
@@ -264,7 +262,7 @@ weekly-update cron(0 15 ? * FRI *) # friday at 3pm
             After <code>.arc</code><br>
           <small>
 					<ol>
-            <li>Dev cycles are immediate, deployments run in secondss
+            <li>Dev cycles are immediate, deployments run in seconds
 						<li>Infra is consistent, bugs are easy to trace (and isolated!)
 						<li>Green builds and happy devs
 					</ol>
@@ -274,26 +272,32 @@ weekly-update cron(0 15 ? * FRI *) # friday at 3pm
 <section>Things we learned the hard way</section>
 <section>Setup a completely isolated staging bot right away</section>
 <section>Everything should be an optmistic update</section>
-<section>Keep your lambdas small</section>
-<section>Keep your lambdas warm</section>
+<section>Keep your Lambdas small</section>
+<section>Keep your Lambdas warm</section>
 <section>UI is ok! Buttons are great</section>
 <section>Command based interaction is ok!</section>
 <section>Perf budgets are crucial for focus</section>
 
 
-<section>It is incredibly harder to build something fast and simple than it is to build something large and slow</section>
+<section>It's much harder to build something fast and simple than it is to build something large and slow</section>
 
 
-<section><blockquote>A complex system that works is invariably found to have evolved from a simple system that worked. A complex system designed from scratch never works and cannot be patched up to make it work. You have to start over with a working simple system. – John Gall </blockquote></section>
-
-
-
+<section><blockquote>A complex system that works is invariably found to have evolved from a simple system that worked.<br /><br />A complex system designed from scratch never works and cannot be patched up to make it work.<br /><br />You have to start over with a working simple system.<br />–John Gall </blockquote></section>
 
 
 
 
 
-        <section>Thx! <a href=https://twitter.com/brianleroux>@brianleroux</a></section>
+
+
+
+        <section>
+          <p>Thx!</p>
+          <p><a href=https://twitter.com/brianleroux>@brianleroux</a></p>
+          <br/>
+          <p><a href=https://begin.com>begin.com</a></p>
+          <p><a href=https://twitter.com/begin>@begin</a></p>
+        </section>
 
 <!--
 
